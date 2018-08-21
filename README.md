@@ -36,6 +36,10 @@ new cookieControl(<option>);
 |value|string|no|modify value|'world'|
 |expiredTime|number|no|update expired time & unit is seconds|60|
 
+**Notice:**
+
+if expiredTime is empty, this cookie is session cookies.
+
 ## **Example**
 
 ```JavaScript
@@ -52,3 +56,5 @@ test.update({
 
 test.delete();
 ```
+
+[Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)

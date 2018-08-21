@@ -27,7 +27,6 @@
             path = 'path=' + path + ';';
         }
 
-        console.log(name, value, domain, path, expires);
         document.cookie = name + '=' + value + ';' + domain + path + expires;
 
         function get () {

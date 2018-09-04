@@ -5,19 +5,19 @@ cookie control
 set cookie or update cookie or delete cookie
 
 ```JavaScript
-new cookieControl(<option>);
+cookieControl(<method>, <option>);
 ```
 
-## **Method**
+## **Method**(String)
 
 * get
   * get this cookie
-* update (option)
-  * update this cookie value or expired time
+* set
+  * set this cookie value
 * delete
   * delete this cookie
 
-## **Option**
+## **Option**(Object)
 
 ### cookie_control
 
@@ -29,13 +29,6 @@ new cookieControl(<option>);
 |domain|string|no|cookie's domain|'example.com'|
 |path|string|no|cookie's path|'/'|
 
-### update
-
-|key|type|required|description|example|
-|---|---|---|---|---|
-|value|string|no|modify value|'world'|
-|expiredTime|number|no|update expired time & unit is seconds|60|
-
 **Notice:**
 
 if expiredTime is empty, this cookie is session cookies.
@@ -43,18 +36,19 @@ if expiredTime is empty, this cookie is session cookies.
 ## **Example**
 
 ```JavaScript
+
 var opt = {
     name: 'test',
     value: '123321',
     expiredTime: 5*60
 };
-var test = new cookieControl(opt);
 
-test.update({
-    value: '456654'
+cookieControl('set', opt);
+
+cookieControl('get', {
+    name: 'test'
 });
 
-test.delete();
 ```
 
 [Reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)

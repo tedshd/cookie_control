@@ -8,12 +8,12 @@
     var cookieControl = function (method, option) {
 
         var name = option.name || '',
-            value = option.value || '',
-            extime = option.expiredTime || '',
-            domain = option.domain || '',
-            path = option.path || '/',
-            day = '',
-            expires = '';
+        value    = option.value || '',
+        extime   = option.expiredTime || '',
+        domain   = option.domain || '',
+        path     = option.path || '',
+        day      = '',
+        expires  = '';
 
         if (!name) {
             console.error('cookieControl: not set name');
@@ -46,7 +46,6 @@
                     }
                 }
                 return '';
-                break;
             case 'delete':
                 document.cookie = name + '=;' + domain + path + ' expires=Thu, 01 Jan 1970 00:00:00 UTC;';
                 break;

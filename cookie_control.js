@@ -8,12 +8,13 @@
     var cookieControl = function (method, option) {
 
         var name = option.name || '',
-        value    = option.value || '',
-        extime   = option.expiredTime || '',
-        domain   = option.domain || '',
-        path     = option.path || '',
-        day      = '',
-        expires  = '';
+        value           = option.value || '',
+        extime          = option.expiredTime || '',
+        domain          = option.domain || '',
+        path            = option.path || '',
+        currentTimeZone = 0,
+        day             = '',
+        expires         = '';
 
         if (!name) {
             console.error('cookieControl: not set name');
@@ -22,8 +23,9 @@
 
         if (extime) {
             day = new Date();
-            day.setTime(day.getTime() + (extime*1000));
-            expires = 'expires=' + day.toGMTString() + ';';
+            currentTimeZone = 0 - (day.getTimezoneOffset() / 60);
+            day.setTime(day.getTime() + (extime*1000) + currentTimeZone*60*60*1000);
+            expires = 'expires=' + day.toUTCString() + ';';
         }
         if (domain) {
             domain = 'domain=' + domain + ';';

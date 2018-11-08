@@ -5,20 +5,27 @@
  */
 
 (function () {
-    var cookieControl = function (option) {
+    var cookieControl = function (method, option) {
 
         var name = option.name || '',
-            value = option.value || '',
-            extime = option.expiredTime || '',
-            domain = option.domain || '',
-            path = option.path || '',
-            day = '',
-            expires = '';
+        value           = option.value || '',
+        extime          = option.expiredTime || '',
+        domain          = option.domain || '',
+        path            = option.path || '/',
+        currentTimeZone = 0,
+        day             = '',
+        expires         = '';
+
+        if (!name) {
+            console.error('cookieControl: not set name');
+            return;
+        }
 
         if (extime) {
             day = new Date();
-            day.setTime(day.getTime() + (extime*1000));
-            expires = 'expires=' + day.toGMTString() + ';';
+            currentTimeZone = 0 - (day.getTimezoneOffset() / 60);
+            day.setTime(day.getTime() + (extime*1000) + currentTimeZone*60*60*1000);
+            expires = 'expires=' + day.toUTCString() + ';';
         }
         if (domain) {
             domain = 'domain=' + domain + ';';
@@ -27,41 +34,28 @@
             path = 'path=' + path + ';';
         }
 
-        document.cookie = name + '=' + value + ';' + domain + path + expires;
-
-        function get () {
-            var cname = name + '=',
-                ca = document.cookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
-                var c = ca[i].trim();
-                if (c.indexOf(cname) === 0) {
-                    return c.substring(name.length, c.length);
+        switch (method) {
+            case 'set':
+                document.cookie = name + '=' + value + ';' + domain + path + expires;
+                break;
+            case 'get':
+                var cname = name + '=',
+                    ca = document.cookie.split(';');
+                for(var i = 0; i < ca.length; i++) {
+                    var c = ca[i].trim();
+                    if (c.indexOf(cname) === 0) {
+                        return c.substring(cname.length, c.length);
+                    }
                 }
-            }
-            return '';
-        }
-        function update (option) {
-            var uValue = option.value,
-                uExtime = option.expiredTime || '';
+                return '';
+            case 'delete':
+                document.cookie = name + '=;' + domain + path + ' expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+                break;
+            default:
+                console.error('cookieControl: not set method');
+                break;
 
-            if (uExtime) {
-                var day = new Date();
-                day.setTime(day.getTime() + (uExtime*1000));
-                expires = 'expires=' + day.toGMTString() + ';';
-            }
-            if (uValue) {
-                value = uValue;
-            }
-
-            document.cookie = name + '=' + value + ';' + domain + path + expires;
         }
-        function del () {
-            document.cookie = name + '=;' + domain + path + ' expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-        }
-
-        this.get = get;
-        this.update = update;
-        this.delete = del;
     };
     window.cookieControl = cookieControl;
 })();

@@ -17,16 +17,23 @@
         value: '123321',
         expiredTime: 5*60
     };
-    var test = new cookieControl(opt);
+    cookieControl('set', opt);
+
+    console.log(cookieControl('get', {
+        name: 'test'
+    }));
 
     document.querySelector('#update').addEventListener('click', function () {
-        test.update({
+        cookieControl('set', {
+            name: 'test',
             value: '456654'
         });
     });
 
     document.querySelector('#del').addEventListener('click', function () {
-        test.delete();
+        cookieControl('delete', {
+            name: 'test'
+        });
     });
 </script>
 </html>

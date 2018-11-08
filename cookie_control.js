@@ -11,7 +11,7 @@
         value           = option.value || '',
         extime          = option.expiredTime || '',
         domain          = option.domain || '',
-        path            = option.path || '',
+        path            = option.path || '/',
         currentTimeZone = 0,
         day             = '',
         expires         = '';

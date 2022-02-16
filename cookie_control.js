@@ -22,9 +22,10 @@
         }
 
         if (extime) {
-            day = new Date();
-            currentTimeZone = 0 - (day.getTimezoneOffset() / 60);
-            day.setTime(day.getTime() + (extime*1000) + currentTimeZone*60*60*1000);
+            // day = new Date();
+            // currentTimeZone = 0 - (day.getTimezoneOffset() / 60);
+            // day.setTime(day.getTime() + (extime*1000) + currentTimeZone*60*60*1000);
+            day = new Date(Date.now() + extime * 1000);
             expires = 'expires=' + day.toUTCString() + ';';
         }
         if (domain) {

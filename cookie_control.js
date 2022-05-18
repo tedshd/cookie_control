@@ -9,7 +9,7 @@
 
         var name = option.name || '',
         value           = option.value || '',
-        extime          = option.expiredTime || '',
+        extime          = option.expiredTime || 0,
         domain          = option.domain || '',
         path            = option.path || '/',
         currentTimeZone = 0,
